@@ -1,0 +1,90 @@
+extends layout
+
+block content
+    .w3-card-4
+        .w3-container.w3-teal
+            h1 Livro #{livro._id}
+
+        .w3-container
+            ul.w3-ul.w3-card-4(style="width:50%")
+                li 
+                    b title: 
+                    span= livro['title']
+                li
+                    b series: 
+                    span= livro['series']
+                li
+                    b author: 
+                    span= livro['author'].join(", ")
+                li
+                    b rating: 
+                    span= livro['rating']
+                li
+                    b description: 
+                    span= livro['description']
+                li
+                    b language: 
+                    span= livro['language']
+                li
+                    b isbn: 
+                    span= livro['isbn']
+                li
+                    b genres: 
+                    span= livro['genres'].join(", ")
+                li
+                    b characters: 
+                    span= livro['characters'].join(", ")
+                li
+                    b bookFormat: 
+                    span= livro['bookFormat']
+                li
+                    b edition: 
+                    span= livro['edition']
+                li
+                    b pages: 
+                    span= livro['pages']
+                li
+                    b publisher: 
+                    span= livro['publisher']
+                li
+                    b publishDate: 
+                    span= livro['publishDate']
+                li
+                    b firstPublishDate: 
+                    span= livro['firstPublishDate']
+                li
+                    b awards: 
+                    span= livro['awards'].join(", ")
+                li
+                    b numRatings: 
+                    span= livro['numRatings']
+                li
+                    b ratingsByStars: 
+                    span= livro['ratingsByStars'].join(", ")
+                li
+                    b likedPercent: 
+                    span= livro['likedPercent']
+                li
+                    b setting: 
+                    span= livro['setting'].join(", ")
+                li
+                    b coverImg: 
+                    if livro['coverImg']
+                        b Capa do Livro:
+                        img(src=livro['coverImg'], alt="Capa do Livro")
+                li
+                    b bbeScore: 
+                    span= livro['bbeScore']
+                li
+                    b bbeVotes: 
+                    span= livro['bbeVotes']
+                li
+                    b price: 
+                    span= livro['price']
+                
+
+        footer.w3-container.w3-teal
+            address 
+                span Gerado para o recurso 2024 ENGWEB - [
+                a(href="/") Voltar
+                span ]

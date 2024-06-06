@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    header.w3-container.w3-teal
+        h1
+            span Lista de livros
+
+    .w3-container
+        table.w3-table-all 
+            tr 
+                th Id 
+                th Título
+                th Autor
+                th Data de Publicação
+                th Páginas
+            each livro in listLivros
+                tr 
+                    td
+                        a(href="/" + livro._id)= livro._id 
+                    td= livro.title  
+                    td= livro.author.join(", ")
+                    td= livro.publishDate 
+                    td= livro.pages
+
+    footer.w3-container.w3-teal
+        h5 Gerado para o recurso ENGWEB 2024

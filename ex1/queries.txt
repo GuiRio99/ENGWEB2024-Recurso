@@ -1,0 +1,207 @@
+1.
+
+Querie: db.livros.count({ "title": { $regex: /Love/i } })
+
+Resultado: 366
+
+2.
+
+Querie: db.livros.find({ "author": { $regex: /Austen/i } }, { "title": 1, "_id": 0 }).sort({ "title": 1 })
+
+[
+  { title: 'Emma' },
+  { title: 'Mansfield Park' },
+  { title: 'Northanger Abbey' },
+  { title: 'Persuasion' },
+  { title: 'Pride and Prejudice' },
+  { title: 'Pride and Prejudice and Zombies' },
+  { title: 'Pride and Prejudice and Zombies: The Graphic Novel' },
+  { title: 'Sense and Sensibility' },
+  { title: 'The Complete Novels' }
+]
+
+
+3. 
+
+Querie: db.livros.distinct("author").sort()
+
+Resultado:
+
+[
+  ' #1-3)',
+  ' #4-5)',
+  ' (Goodreads Author)',
+  ' )',
+  ' A. Elizabeth Delany',
+  ' A. Poulin Jr. (Translator)',
+  ' A. Roger Merrill',
+  ' A. Vivanti Salmon (Translator)',
+  ' A.H.T. Levi (Introduction)',
+  ' A.J. Krailsheimer (Translator)',
+  ' A.L. Jackson (Goodreads Author)',
+  ' A.S. Byatt (Editor/Introduction)',
+  ' A.S. Byatt (Introduction)',
+  ' A.T. Hatto (Translator)',
+  ' A.V. Lebrón (translator)',
+  ' A.V. Miller (Translator)',
+  ' Aarno Peromies (Translator)',
+  ' Aaron Asher (Translator)',
+  ' Aaron Johnston (Goodreads Author)',
+  ' Aaron Leichter (Adapter)',
+  ' Aaron Parrett (Introduction)',
+  ' Aaron Pocock (Illustrator)',
+  ' Aaron Shaun Brennan',
+  ' Aaron Sowd (Illustrator)',
+  ' AbCraden (Narrator)',
+  ' AbMcDonald (Goodreads Author)',
+  ' Abbas Maroufi',
+  ' Abbas Milani',
+  ' Abeni Morris (Goodreads Author)',
+  ' Abigail Israel (Translator)',
+  ' Abigail Roux (Goodreads Author)',
+  ' Abu Hamid al-Ghazali',
+  ' Adam Haslett (Goodreads Author) (Introduction)',
+  ' Adam Long (Contributor)',
+  ' Adam McCauley (Illustrator)',
+  ' Adam Parfrey (Introduction)',
+  ' Adam Sadler',
+  ' Adam Sadler (Contributor)',
+  ' Adam Silvera (Goodreads Author)',
+  ' Adrian Alphona (Artist)',
+  ' Adrian Alphona (Illustrator)',
+  ' Adrian J. Walker (Translator)',
+  ' Adriana Hunter (Translator)',
+  ' Adriana Toledo de Almeida (Translator)',
+  ' Adrien Roig (Contributor)',
+  ' Adrienne Barbeau (Read by)',
+  ' Adrienne Dixon (Translator)',
+  ' Afonso Lopes Vieira (Translator)',
+  ' Afterword)',
+  ' Agatha Christie',
+  ' Agnes Moncy Gullón (Translator',
+  ' Agnes Vishnevkin (Editor)',
+  ' Agnieszka Kołakowska (Translator)',
+  ' Agnolo di Cosimo Bronzino (illustrator)',
+  ' Ahlam Mosteghanemi (Goodreads Author)',
+  ' Ahmed H. Zewail',
+  ' Ahmed Shawki (Introduction)',
+  ' Aiko Ito (Translator)',
+  ' Akhil Sharma (Introduction)',
+  ' Akira Shiwawa (Translator)',
+  ' Akira Watanabe (Translator)',
+  ' Al Barrionuevo (Illustrator)',
+  ' Alaa Al Aswany',
+  ' Alain Defossé (Translator)',
+  ' Alan Blair (Translator)',
+  ' Alan Daniel (Illustrator)',
+  ' Alan Davies (Four words)',
+  ' Alan Davis (Penciler)',
+  ' Alan Grant',
+  ' Alan H. Sommerstein (Translator)',
+  ' Alan Jacobs (Editor)',
+  ' Alan Jolis',
+  ' Alan Lee (artist)',
+  ' Alan Lee (artist) (Illustrator)',
+  ' Alan Manford (Editor)',
+  ' Alan R. Clarke (Translator)',
+  ' Alan Sheridan',
+  ' Alan Sheridan (Introduction)',
+  ' Alan Sheridan (Translator)',
+  ' Alan Tiegreen (Illustrator)',
+  ' Alastair Hamilton (Translator)',
+  ' Alastair Hannay (Translator',
+  ' Alastair Hannay (Translator)',
+  ' Alastair McEwen (Translator)',
+  ' Alaya Dawn Johnson (Goodreads Author)',
+  ' Albert Cook Outler (Translator)',
+  ' Albert Uderzo (Illustrator)',
+  ' Albert Wittstock (Translator)',
+  ' Alberto Manguel (Goodreads Author) (Afterword)',
+  ' Alberto Manguel (Goodreads Author) (Translator)',
+  ' Aldo Barilli',
+  ' Aleida Guevara March (Translator)',
+  ' Alethea Nibley (Translator)',
+  ' Alev Lytle Croutier (Afterword)',
+  ' Alev Özgüner',
+  ' Alex Dumitrescu (Illustrator)',
+  ' Alex Goodwin',
+  ' Alex Haley',
+  ' Alex Jennings (Narrator)',
+  ' Alex Kendrick',
+  ... 13763 more items
+]
+
+4. 
+
+db.livros.aggregate([
+  {
+    $unwind: "$genres"
+  },
+  {
+    $group: {
+      _id: "$genres",
+      count: { $sum: 1 }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      genre: "$_id",
+      count: 1
+    }
+  },
+  {
+    $sort: { genre: 1 }
+  }
+])
+
+Resultado: 
+[
+  { count: 5, genre: '12th Century' },
+  { count: 5, genre: '13th Century' },
+  { count: 12, genre: '14th Century' },
+  { count: 12, genre: '15th Century' },
+  { count: 38, genre: '16th Century' },
+  { count: 41, genre: '17th Century' },
+  { count: 73, genre: '18th Century' },
+  { count: 412, genre: '19th Century' },
+  { count: 6, genre: '1st Grade' },
+  { count: 985, genre: '20th Century' },
+  { count: 79, genre: '21st Century' },
+  { count: 12, genre: '2nd Grade' },
+  { count: 6, genre: '40k' },
+  { count: 382, genre: 'Abuse' },
+  { count: 8, genre: 'Academia' },
+  { count: 36, genre: 'Academic' },
+  { count: 531, genre: 'Action' },
+  { count: 6, genre: 'Activism' },
+  { count: 22, genre: 'Adoption' },
+  { count: 3927, genre: 'Adult' }
+]
+
+
+
+5. 
+
+db.livros.find({ "characters": "Sirius Black" }, { "title": 1, "isbn": 1, "_id": 0 }).sort({ "title": 1 })
+
+Resultado: [
+  {
+    title: 'Harry Potter and the Deathly Hallows',
+    isbn: '9780545010221'
+  },
+  {
+    title: 'Harry Potter and the Goblet of Fire',
+    isbn: '9999999999999'
+  },
+  {
+    title: 'Harry Potter and the Order of the Phoenix',
+    isbn: '9780439358071'
+  },
+  {
+    title: 'Harry Potter and the Prisoner of Azkaban',
+    isbn: '9780439655484'
+  }
+]
+
+
